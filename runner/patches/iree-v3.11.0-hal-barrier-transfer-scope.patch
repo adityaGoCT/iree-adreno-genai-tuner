@@ -1,0 +1,24 @@
+diff --git a/runtime/src/iree/modules/hal/module.c b/runtime/src/iree/modules/hal/module.c
+index a67a473..da3c80e 100644
+--- a/runtime/src/iree/modules/hal/module.c
++++ b/runtime/src/iree/modules/hal/module.c
+@@ -916,9 +916,17 @@ IREE_VM_ABI_EXPORT(iree_hal_module_command_buffer_execution_barrier,  //
+       (iree_hal_execution_barrier_flags_t)args->i3;
+ 
+   // TODO(benvanik): decode barriers.
++  // adreno-port patch: the barrier must also cover transfer (copy/fill/update) accesses.
++  // With only DISPATCH_WRITE -> DISPATCH_READ, a dispatch followed by a buffer copy (or a copy
++  // followed by a dispatch) gets no cache flush on Vulkan; on Adreno (both the Qualcomm driver
++  // and Mesa Turnip) the copy then reads stale data (LLM decode: qkv slices copied after the
++  // matmul came out wrong). See NOTES.md.
+   iree_hal_memory_barrier_t global_barrier;
+-  global_barrier.source_scope = IREE_HAL_ACCESS_SCOPE_DISPATCH_WRITE;
+-  global_barrier.target_scope = IREE_HAL_ACCESS_SCOPE_DISPATCH_READ;
++  global_barrier.source_scope =
++      IREE_HAL_ACCESS_SCOPE_DISPATCH_WRITE | IREE_HAL_ACCESS_SCOPE_TRANSFER_WRITE;
++  global_barrier.target_scope =
++      IREE_HAL_ACCESS_SCOPE_DISPATCH_READ | IREE_HAL_ACCESS_SCOPE_DISPATCH_WRITE |
++      IREE_HAL_ACCESS_SCOPE_TRANSFER_READ | IREE_HAL_ACCESS_SCOPE_TRANSFER_WRITE;
+ 
+   return iree_hal_command_buffer_execution_barrier(
+       command_buffer, source_stage_mask, target_stage_mask, flags, 1,

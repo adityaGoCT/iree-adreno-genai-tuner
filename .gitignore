@@ -1,0 +1,11 @@
+# generated / large
+models/
+build/
+third_party/
+.venv/
+.venv-*/
+*.vmfb
+*.irpa
+__pycache__/
+*.pyc
+.DS_Store
