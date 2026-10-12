@@ -2,7 +2,7 @@
 
 Lowering Hugging Face PyTorch models to a mid-range **Adreno 710** phone GPU through
 **MLIR / IREE → SPIR-V → Vulkan**, plus the start of a **genAI tuner** for the IREE stack.
-Companion code for the blog post *"Bringing PyTorch LLMs to a Mid-Range Adreno GPU with IREE"*.
+Companion code for the blog post **[Bringing PyTorch LLMs to a Mid-Range Adreno GPU with IREE](BLOG.md)**.
 
 Target: moto g stylus 5G (2024) · Snapdragon 7s Gen 2 · Adreno 710 · Android 14, driven from a
 Mac over adb (Wi-Fi). Everything runs without root.
