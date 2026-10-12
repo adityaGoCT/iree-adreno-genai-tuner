@@ -1,0 +1,6 @@
+{
+ "f32_gflops": 368.4,
+ "f16_gflops": 920.8,
+ "read_gbs": 15.8,
+ "copy_gbs": 14.4
+}

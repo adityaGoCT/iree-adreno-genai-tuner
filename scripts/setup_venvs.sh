@@ -10,5 +10,7 @@ uv venv "$ROOT/.venv" --python 3.12
 uv pip install --python "$ROOT/.venv/bin/python" "${COMMON[@]}" iree-base-compiler==3.11.0 iree-base-runtime==3.11.0
 uv venv "$ROOT/.venv-iree312" --python 3.12
 uv pip install --python "$ROOT/.venv-iree312/bin/python" "${COMMON[@]}" iree-base-compiler==3.12.0 iree-base-runtime==3.12.0
+# GEMM tuner (gemm/): learned cost model + charts
+uv pip install --python "$ROOT/.venv-iree312/bin/python" scikit-learn==1.9.1 matplotlib==3.11.2
 "$ROOT/.venv/bin/iree-compile" --version | head -2
 "$ROOT/.venv-iree312/bin/iree-compile" --version | head -2

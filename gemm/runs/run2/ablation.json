@@ -1,0 +1,689 @@
+{
+ "S1": {
+  "best": {
+   "us": 15251.041,
+   "samples": [
+    12056.51,
+    15251.041,
+    21195.833
+   ],
+   "gflops": 140.80898792416858,
+   "legal": true,
+   "reasons": null
+  },
+  "no register tiling (TM=TN=1)": {
+   "us": 127890.726,
+   "samples": [
+    127770.882,
+    127890.726,
+    128323.174
+   ],
+   "gflops": 16.791550999561924,
+   "legal": true,
+   "reasons": null
+  },
+  "no vectorization (VEC=1)": {
+   "us": 17909.739,
+   "samples": [
+    15730.364,
+    17909.739,
+    17912.343
+   ],
+   "gflops": 119.9059153235008,
+   "legal": true,
+   "reasons": null
+  },
+  "no vthreads (VT=1x1)": {
+   "us": 12963.489,
+   "samples": [
+    12942.916,
+    12963.489,
+    21343.02
+   ],
+   "gflops": 165.65630194155293,
+   "legal": true,
+   "reasons": null
+  },
+  "flip lane binding (BIND)": {
+   "us": 22313.489,
+   "samples": [
+    16482.968,
+    22313.489,
+    22320.104
+   ],
+   "gflops": 96.24149983895391,
+   "legal": true,
+   "reasons": null
+  },
+  "other wave size (SG)": {
+   "us": 19540.52,
+   "samples": [
+    19459.27,
+    19540.52,
+    24949.947
+   ],
+   "gflops": 109.8990020736398,
+   "legal": true,
+   "reasons": null
+  },
+  "accumulate in f32": {
+   "us": 20067.916,
+   "samples": [
+    18450.52,
+    20067.916,
+    23315.364
+   ],
+   "gflops": 107.01079514185729,
+   "legal": true,
+   "reasons": null
+  }
+ },
+ "S2": {
+  "best": {
+   "us": 22737.187,
+   "samples": [
+    22444.583,
+    22737.187,
+    23021.979
+   ],
+   "gflops": 106.25408956701636,
+   "legal": true,
+   "reasons": null
+  },
+  "no register tiling (TM=TN=1)": {
+   "us": 148034.736,
+   "samples": [
+    147555.413,
+    148034.736,
+    148118.955
+   ],
+   "gflops": 16.3199473939684,
+   "legal": true,
+   "reasons": null
+  },
+  "flip inlining of transposes": {
+   "us": 49530.051,
+   "samples": [
+    48107.499,
+    49530.051,
+    49702.395
+   ],
+   "gflops": 48.776834572611286,
+   "legal": true,
+   "reasons": null
+  },
+  "add vthreads (VTN=2)": {
+   "us": 24599.531,
+   "samples": [
+    24541.926,
+    24599.531,
+    24736.874
+   ],
+   "gflops": 98.20996603553132,
+   "legal": true,
+   "reasons": null
+  },
+  "flip lane binding (BIND)": {
+   "us": 43690.207,
+   "samples": [
+    43444.843,
+    43690.207,
+    45822.134
+   ],
+   "gflops": 55.296581771745785,
+   "legal": true,
+   "reasons": null
+  },
+  "other wave size (SG)": {
+   "us": 30710.26,
+   "samples": [
+    30610.885,
+    30710.26,
+    30805.572
+   ],
+   "gflops": 78.66814230814067,
+   "legal": true,
+   "reasons": null
+  },
+  "accumulate in f32": {
+   "us": 32623.228,
+   "samples": [
+    32502.187,
+    32623.228,
+    32672.083
+   ],
+   "gflops": 74.05518252209744,
+   "legal": true,
+   "reasons": null
+  }
+ },
+ "S3": {
+  "best": {
+   "us": 4221.51,
+   "samples": [
+    4216.281,
+    4221.51,
+    9068.672
+   ],
+   "gflops": 127.1750894821995,
+   "legal": true,
+   "reasons": null
+  },
+  "no register tiling (TM=TN=1)": {
+   "us": 44999.061,
+   "samples": [
+    44998.072,
+    44999.061,
+    45000.936
+   ],
+   "gflops": 11.930713665336262,
+   "legal": true,
+   "reasons": null
+  },
+  "no vectorization (VEC=1)": {
+   "us": 4662.823,
+   "samples": [
+    4339.208,
+    4662.823,
+    9256.979
+   ],
+   "gflops": 115.13859994256698,
+   "legal": true,
+   "reasons": null
+  },
+  "flip inlining of transposes": {
+   "us": 12315.468,
+   "samples": [
+    9600.0,
+    12315.468,
+    16008.437
+   ],
+   "gflops": 43.593220493122956,
+   "legal": true,
+   "reasons": null
+  },
+  "no vthreads (VT=1x1)": {
+   "us": 4091.937,
+   "samples": [
+    3882.977,
+    4091.937,
+    8181.163
+   ],
+   "gflops": 131.2021450965643,
+   "legal": true,
+   "reasons": null
+  },
+  "flip lane binding (BIND)": {
+   "us": 4202.5,
+   "samples": [
+    4199.573,
+    4202.5,
+    9221.224
+   ],
+   "gflops": 127.75036573468174,
+   "legal": true,
+   "reasons": null
+  },
+  "other wave size (SG)": {
+   "us": 4372.448,
+   "samples": [
+    4218.906,
+    4372.448,
+    9059.609
+   ],
+   "gflops": 122.78497354342464,
+   "legal": true,
+   "reasons": null
+  },
+  "no shared-memory staging": {
+   "us": 4428.364,
+   "samples": [
+    4425.031,
+    4428.364,
+    9368.255
+   ],
+   "gflops": 121.23459408485843,
+   "legal": true,
+   "reasons": null
+  }
+ },
+ "S4": {
+  "best": {
+   "us": 7870.911,
+   "samples": [
+    7830.755,
+    7870.911,
+    9967.448
+   ],
+   "gflops": 68.20950103488656,
+   "legal": true,
+   "reasons": null
+  },
+  "no cross-thread reduction (KT=1)": {
+   "us": 31029.218,
+   "samples": [
+    31011.874,
+    31029.218,
+    31783.853
+   ],
+   "gflops": 17.302108999330887,
+   "legal": true,
+   "reasons": null
+  },
+  "no register tiling (TM=TN=1)": {
+   "us": 25133.697,
+   "samples": [
+    19013.593,
+    25133.697,
+    25254.531
+   ],
+   "gflops": 21.360602540883658,
+   "legal": true,
+   "reasons": null
+  },
+  "no vectorization (VEC=1)": {
+   "us": 12700.104,
+   "samples": [
+    12670.416,
+    12700.104,
+    12956.406
+   ],
+   "gflops": 42.2729539852587,
+   "legal": true,
+   "reasons": null
+  },
+  "flip inlining of transposes": {
+   "us": 26778.124,
+   "samples": [
+    21505.364,
+    26778.124,
+    26856.979
+   ],
+   "gflops": 20.048861974050162,
+   "legal": true,
+   "reasons": null
+  },
+  "add vthreads (VTN=2)": {
+   "us": 10740.651,
+   "samples": [
+    10726.224,
+    10740.651,
+    10753.88
+   ],
+   "gflops": 49.984950819089086,
+   "legal": true,
+   "reasons": null
+  },
+  "flip lane binding (BIND)": {
+   "us": 9965.416,
+   "samples": [
+    9961.979,
+    9965.416,
+    9985.859
+   ],
+   "gflops": 53.87340699073676,
+   "legal": true,
+   "reasons": null
+  },
+  "other wave size (SG)": {
+   "us": 9997.812,
+   "samples": [
+    9983.281,
+    9997.812,
+    9998.307
+   ],
+   "gflops": 53.69884050630278,
+   "legal": true,
+   "reasons": null
+  }
+ },
+ "S5": {
+  "best": {
+   "us": 12265.156,
+   "samples": [
+    12243.229,
+    12265.156,
+    12297.474
+   ],
+   "gflops": 87.54408211359073,
+   "legal": true,
+   "reasons": null
+  },
+  "no register tiling (TM=TN=1)": {
+   "us": 91461.144,
+   "samples": [
+    91336.612,
+    91461.144,
+    91478.852
+   ],
+   "gflops": 11.739868725018352,
+   "legal": true,
+   "reasons": null
+  },
+  "no vectorization (VEC=1)": {
+   "us": 11931.146,
+   "samples": [
+    11927.864,
+    11931.146,
+    11982.161
+   ],
+   "gflops": 89.99486084572261,
+   "legal": true,
+   "reasons": null
+  },
+  "flip inlining of transposes": {
+   "us": 446398.583,
+   "samples": [
+    445506.552,
+    446398.583,
+    446444.625
+   ],
+   "gflops": 2.4053432624807414,
+   "legal": true,
+   "reasons": null
+  },
+  "add vthreads (VTN=2)": {
+   "us": 14122.291,
+   "samples": [
+    14110.052,
+    14122.291,
+    14149.375
+   ],
+   "gflops": 76.03170222168627,
+   "legal": true,
+   "reasons": null
+  },
+  "flip lane binding (BIND)": {
+   "us": 11959.713,
+   "samples": [
+    11956.38,
+    11959.713,
+    11964.427
+   ],
+   "gflops": 89.77989889891171,
+   "legal": true,
+   "reasons": null
+  },
+  "other wave size (SG)": {
+   "us": 12277.291,
+   "samples": [
+    12255.521,
+    12277.291,
+    12373.593
+   ],
+   "gflops": 87.45755264740406,
+   "legal": true,
+   "reasons": null
+  },
+  "no shared-memory staging": {
+   "us": 222761.088,
+   "samples": [
+    221992.39,
+    222761.088,
+    223160.411
+   ],
+   "gflops": 4.82014984591923,
+   "legal": true,
+   "reasons": null
+  }
+ },
+ "S6": {
+  "best": {
+   "us": 2722.749,
+   "samples": [
+    2058.854,
+    2722.749,
+    2723.715
+   ],
+   "gflops": 98.58986487553572,
+   "legal": true,
+   "reasons": null
+  },
+  "no register tiling (TM=TN=1)": {
+   "us": 25319.426,
+   "samples": [
+    25315.051,
+    25319.426,
+    25325.26
+   ],
+   "gflops": 10.601956616236087,
+   "legal": true,
+   "reasons": null
+  },
+  "no vectorization (VEC=1)": {
+   "us": 2719.748,
+   "samples": [
+    2027.598,
+    2719.748,
+    2722.708
+   ],
+   "gflops": 98.69865002198733,
+   "legal": true,
+   "reasons": null
+  },
+  "add vthreads (VTN=2)": {
+   "us": 3089.987,
+   "samples": [
+    2225.338,
+    3089.987,
+    3090.085
+   ],
+   "gflops": 86.87268134137781,
+   "legal": true,
+   "reasons": null
+  },
+  "flip lane binding (BIND)": {
+   "us": 2721.699,
+   "samples": [
+    2034.369,
+    2721.699,
+    2722.974
+   ],
+   "gflops": 98.62789970529438,
+   "legal": true,
+   "reasons": null
+  },
+  "other wave size (SG)": {
+   "us": 2722.419,
+   "samples": [
+    2719.236,
+    2722.419,
+    2724.375
+   ],
+   "gflops": 98.60181551774359,
+   "legal": true,
+   "reasons": null
+  },
+  "accumulate in f32": {
+   "us": 3935.877,
+   "samples": [
+    2878.446,
+    3935.877,
+    3939.305
+   ],
+   "gflops": 68.20219635928663,
+   "legal": true,
+   "reasons": null
+  }
+ },
+ "S7": {
+  "best": {
+   "us": 2202.888,
+   "samples": [
+    2191.43,
+    2202.888,
+    2211.161
+   ],
+   "gflops": 15.232019058617597,
+   "legal": true,
+   "reasons": null
+  },
+  "no cross-thread reduction (KT=1)": {
+   "us": 14566.354,
+   "samples": [
+    14556.927,
+    14566.354,
+    15344.791
+   ],
+   "gflops": 2.303557362398305,
+   "legal": true,
+   "reasons": null
+  },
+  "no register tiling (TM=TN=1)": {
+   "us": 2298.972,
+   "samples": [
+    2291.936,
+    2298.972,
+    2301.792
+   ],
+   "gflops": 14.595406990602756,
+   "legal": true,
+   "reasons": null
+  },
+  "no vectorization (VEC=1)": {
+   "us": 2367.795,
+   "samples": [
+    2335.417,
+    2367.795,
+    2701.586
+   ],
+   "gflops": 14.17117275777675,
+   "legal": true,
+   "reasons": null
+  },
+  "flip inlining of transposes": {
+   "us": 27398.072,
+   "samples": [
+    27215.781,
+    27398.072,
+    28340.26
+   ],
+   "gflops": 1.2247004825741024,
+   "legal": true,
+   "reasons": null
+  },
+  "add vthreads (VTN=2)": {
+   "us": 2233.979,
+   "samples": [
+    2215.412,
+    2233.979,
+    2260.562
+   ],
+   "gflops": 15.020030179334722,
+   "legal": true,
+   "reasons": null
+  },
+  "flip lane binding (BIND)": {
+   "us": 2209.204,
+   "samples": [
+    2196.089,
+    2209.204,
+    2218.239
+   ],
+   "gflops": 15.188471503763347,
+   "legal": true,
+   "reasons": null
+  },
+  "other wave size (SG)": {
+   "us": 2338.977,
+   "samples": [
+    2318.253,
+    2338.977,
+    2350.745
+   ],
+   "gflops": 14.345772532179666,
+   "legal": true,
+   "reasons": null
+  }
+ },
+ "S8": {
+  "best": {
+   "us": 5752.639,
+   "samples": [
+    5616.588,
+    5752.639,
+    9593.463
+   ],
+   "gflops": 157.4876615758437,
+   "legal": true,
+   "reasons": null
+  },
+  "no register tiling (TM=TN=1)": {
+   "us": 93340.154,
+   "samples": [
+    93142.446,
+    93340.154,
+    93491.612
+   ],
+   "gflops": 9.706108520026655,
+   "legal": true,
+   "reasons": null
+  },
+  "no vectorization (VEC=1)": {
+   "us": 9539.062,
+   "samples": [
+    9533.177,
+    9539.062,
+    13620.052
+   ],
+   "gflops": 94.97471176935426,
+   "legal": true,
+   "reasons": null
+  },
+  "flip inlining of transposes": {
+   "us": 9220.911,
+   "samples": [
+    7101.163,
+    9220.911,
+    12426.041
+   ],
+   "gflops": 98.25164389939346,
+   "legal": true,
+   "reasons": null
+  },
+  "add vthreads (VTN=2)": {
+   "us": 5722.213,
+   "samples": [
+    5620.911,
+    5722.213,
+    9591.614
+   ],
+   "gflops": 158.32505081513045,
+   "legal": true,
+   "reasons": null
+  },
+  "flip lane binding (BIND)": {
+   "us": 7161.597,
+   "samples": [
+    5830.182,
+    7161.597,
+    7274.323
+   ],
+   "gflops": 126.50385996307807,
+   "legal": true,
+   "reasons": null
+  },
+  "other wave size (SG)": {
+   "us": 5710.469,
+   "samples": [
+    5079.232,
+    5710.469,
+    9767.942
+   ],
+   "gflops": 158.65065794070506,
+   "legal": true,
+   "reasons": null
+  },
+  "accumulate in f32": {
+   "us": 7175.955,
+   "samples": [
+    7169.739,
+    7175.955,
+    7836.944
+   ],
+   "gflops": 126.25074488343364,
+   "legal": true,
+   "reasons": null
+  }
+ }
+}

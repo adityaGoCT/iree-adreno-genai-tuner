@@ -2,7 +2,8 @@
 
 Lowering Hugging Face PyTorch models to a mid-range **Adreno 710** phone GPU through
 **MLIR / IREE → SPIR-V → Vulkan**, plus the start of a **genAI tuner** for the IREE stack.
-Companion code for the blog post **[Bringing PyTorch LLMs to a Mid-Range Adreno GPU with IREE](BLOG.md)**.
+Companion code for the blog posts **[Bringing PyTorch LLMs to a Mid-Range Adreno GPU with IREE](BLOG.md)** and
+**[Part 2: Tuning fp16 GEMMs on a Phone GPU: Schedules, a Verifier and a Cost Model](BLOG-GEMM.md)**.
 
 Target: moto g stylus 5G (2024) · Snapdragon 7s Gen 2 · Adreno 710 · Android 14, driven from a
 Mac over adb (Wi-Fi). Everything runs without root.
@@ -18,6 +19,7 @@ Mac over adb (Wi-Fi). Everything runs without root.
 | Tiny Llama (prefill + decode, chunked, KV buckets) on the GPU | exact vs Hugging Face |
 | Llama 3.2 3B int4 export (int4 K-packed int32, 5 KV buckets, in-place KV cache) | built + validated on host; on-device run is next |
 | Kernel tuner on the decode int4 GEMV (5120 x 3072) | 20.6 ms → **2.63 ms** (7.8x) |
+| fp16 GEMM schedule search ([`gemm/`](gemm/)): 8 shapes, verifier + cost model + evolutionary search | **7.0x** naive, **28x** IREE default (geomean); 1.9x random search at equal budget; GEMV at 97.5% of roofline |
 
 Every bug and its fix: [`docs/BUGS.md`](docs/BUGS.md); bisection notes: [`docs/NOTES.md`](docs/NOTES.md). Tuner design:
 [`docs/TUNER_PLAN.md`](docs/TUNER_PLAN.md). Device facts: [`docs/DEVICE.md`](docs/DEVICE.md).
@@ -42,6 +44,7 @@ runner/
   turnip/vulkan_shim.c     loads Turnip's HAL module, pins subgroup size to 64
   turnip/vkinfo.c          compute capability dump (stock vs Turnip)
   patches/                 IREE HAL execution-barrier fix (3.11, 3.12)
+gemm/                      fp16 GEMM tuner: schedule space -> GLSL, verifier, cost model, search, Vulkan harness
 targets/                   GPU target descriptions injected as hal.device.targets
 tests/probes/              subgroup-reduction probe, smoke matmul
 ```
@@ -92,6 +95,8 @@ IREE_VERSION=3.12 scripts/compile.sh <model_dir> turnip710   # dumps <target>.ir
 .venv-iree312/bin/python scripts/tune/kernel_tuner.py tune-files --model-dir <model_dir> \
     --files <model_dir>/turnip710.iree312.benchmarks/<dispatch>.mlir --max-candidates 200
 ```
+
+fp16 GEMM tuning on the phone (Turnip; adb over Wi-Fi, `ADB_WIFI=ip:port`): see [`gemm/README.md`](gemm/README.md).
 
 ## Status
 

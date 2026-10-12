@@ -1,0 +1,82 @@
+{
+ "S1": {
+  "us": 609919.0,
+  "gflops": 3.520932530385182,
+  "dispatches": [
+   [
+    "module_main_dispatch_0_vulkan_spirv_fb_benchmark",
+    609919.0
+   ]
+  ]
+ },
+ "S2": {
+  "us": 1407721.0,
+  "gflops": 1.7161917056007547,
+  "dispatches": [
+   [
+    "module_main_dispatch_0_vulkan_spirv_fb_benchmark",
+    1407721.0
+   ]
+  ]
+ },
+ "S3": {
+  "us": 150221.0,
+  "gflops": 3.5738739057788194,
+  "dispatches": [
+   [
+    "module_main_dispatch_0_vulkan_spirv_fb_benchmark",
+    150221.0
+   ]
+  ]
+ },
+ "S4": {
+  "us": 117451.0,
+  "gflops": 4.57102035742565,
+  "dispatches": [
+   [
+    "module_main_dispatch_0_vulkan_spirv_fb_benchmark",
+    117451.0
+   ]
+  ]
+ },
+ "S5": {
+  "us": 626158.0,
+  "gflops": 1.7148097189527245,
+  "dispatches": [
+   [
+    "module_main_dispatch_0_vulkan_spirv_fb_benchmark",
+    626158.0
+   ]
+  ]
+ },
+ "S6": {
+  "us": 70949.0,
+  "gflops": 3.7834987949090193,
+  "dispatches": [
+   [
+    "module_main_dispatch_0_vulkan_spirv_fb_benchmark",
+    70949.0
+   ]
+  ]
+ },
+ "S7": {
+  "us": 5797.0,
+  "gflops": 5.788240814214249,
+  "dispatches": [
+   [
+    "module_main_dispatch_0_vulkan_spirv_fb_benchmark",
+    5797.0
+   ]
+  ]
+ },
+ "S8": {
+  "us": 271989.0,
+  "gflops": 3.330905529267728,
+  "dispatches": [
+   [
+    "module_main_dispatch_0_vulkan_spirv_fb_benchmark",
+    271989.0
+   ]
+  ]
+ }
+}

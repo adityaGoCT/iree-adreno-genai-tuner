@@ -1,0 +1,67 @@
+{
+ "measured": 1544,
+ "gpu_failures": 7,
+ "compile_failures": 0,
+ "precision": 0.9954663212435233,
+ "proposed": 204000,
+ "valid": 64158,
+ "rejected": {
+  "k-tiling": 33171,
+  "numerics-f16-accumulation": 30989,
+  "barrier-wave-occupancy": 29948,
+  "workgroup-size": 28407,
+  "shared-memory": 25589,
+  "unroll-divisibility": 22448,
+  "subgroup-lane-order-2d": 20144,
+  "loader-alignment-A": 5018,
+  "loader-alignment-B": 2597,
+  "register-pressure": 2352,
+  "double-buffer-without-smem": 168,
+  "pad-without-smem": 154,
+  "tile-algebra": 23
+ },
+ "failures": [
+  [
+   "S1",
+   "wg1x8x256 t1x4 vt1x4 smA db v1 f32 bn sg64",
+   null,
+   "device_lost"
+  ],
+  [
+   "S3",
+   "wg16x4x32 t1x1 kt4sb smA smB v2 u2 f16 bm sg64",
+   0.005269,
+   null
+  ],
+  [
+   "S5",
+   "wg64x128x32 t8x2 vt2x2 kt2sc smA smB v8 f32 bn sg64",
+   null,
+   "harness exit 1: device: Turnip Adreno (TM) 710  api 1.4  timestampPeriod 52.083 ns\nfeatures: shaderFloat16=1 storageBuffer16BitAccess=1 subgroupSizeControl=1\n"
+  ],
+  [
+   "S5",
+   "wg1x256x32 t1x1 kt8sc smA smB db v4 f32 bn sg128",
+   null,
+   "device_lost"
+  ],
+  [
+   "S5",
+   "wg2x32x256 t2x1 vt2x1 kt2sc smB db v1 u2 f32 bm sg64",
+   null,
+   "device_lost"
+  ],
+  [
+   "S6",
+   "wg32x64x4 t4x1 kt2sc smA smB db v1 u2 f16 bm sg64",
+   null,
+   "harness exit 1: device: Turnip Adreno (TM) 710  api 1.4  timestampPeriod 52.083 ns\nfeatures: shaderFloat16=1 storageBuffer16BitAccess=1 subgroupSizeControl=1\n"
+  ],
+  [
+   "S6",
+   "wg64x16x32 t1x2 kt2sb smA db v4 u2 f32 bn sg64",
+   null,
+   "harness exit 1: device: Turnip Adreno (TM) 710  api 1.4  timestampPeriod 52.083 ns\nfeatures: shaderFloat16=1 storageBuffer16BitAccess=1 subgroupSizeControl=1\n"
+  ]
+ ]
+}

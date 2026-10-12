@@ -1,11 +1,34 @@
-# generated / large
-models/
-build/
-third_party/
-.venv/
-.venv-*/
+# generated / large (no trailing slash: also matches symlinks to shared toolchains)
+/models
+/build
+/third_party
+/.venv
+/.venv-*
+# gemm results: keep the small JSON/JSONL that back the write-up; ignore data, kernels, manifests
+/gemm/runs/*
+!/gemm/runs/roofline.json
+!/gemm/runs/run2/
+/gemm/runs/run2/*
+!/gemm/runs/run2/*.json
+!/gemm/runs/run2/*.jsonl
+!/gemm/runs/run2x/
+/gemm/runs/run2x/*
+!/gemm/runs/run2x/log.jsonl
+!/gemm/runs/iree/
+/gemm/runs/iree/*
+!/gemm/runs/iree/*.json
+!/gemm/runs/fuzz2/
+!/gemm/runs/fuzz3/
+!/gemm/runs/probe2048/
+/gemm/runs/fuzz2/*
+/gemm/runs/fuzz3/*
+/gemm/runs/probe2048/*
+!/gemm/runs/fuzz2/log.jsonl
+!/gemm/runs/fuzz3/log.jsonl
+!/gemm/runs/probe2048/log.jsonl
 *.vmfb
 *.irpa
+*.spv
 __pycache__/
 *.pyc
 .DS_Store

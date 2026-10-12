@@ -1,0 +1,98 @@
+[
+ {
+  "s": "S1",
+  "name": "square_nn",
+  "naive": 16.2,
+  "iree": 3.5,
+  "random": 67.7,
+  "tuned": 173.1,
+  "tlo": 101.0,
+  "tmed": 101.1,
+  "tuned_from": "model+f16p",
+  "roof": 920.8
+ },
+ {
+  "s": "S2",
+  "name": "prefill_nt",
+  "naive": 27.9,
+  "iree": 1.7,
+  "random": 53.6,
+  "tuned": 107.2,
+  "tlo": 103.9,
+  "tmed": 106.9,
+  "tuned_from": "model+f16p",
+  "roof": 920.8
+ },
+ {
+  "s": "S3",
+  "name": "skinny_tn",
+  "naive": 10.6,
+  "iree": 3.6,
+  "random": 43.3,
+  "tuned": 127.4,
+  "tlo": 69.0,
+  "tmed": 127.1,
+  "tuned_from": "model",
+  "roof": 920.8
+ },
+ {
+  "s": "S4",
+  "name": "flat_nt",
+  "naive": 19.0,
+  "iree": 4.5,
+  "random": 28.3,
+  "tuned": 69.5,
+  "tlo": 53.8,
+  "tmed": 53.9,
+  "tuned_from": "model+f16p",
+  "roof": 250.8
+ },
+ {
+  "s": "S5",
+  "name": "largek_tt",
+  "naive": 13.3,
+  "iree": 1.7,
+  "random": 58.0,
+  "tuned": 93.5,
+  "tlo": 70.0,
+  "tmed": 93.4,
+  "tuned_from": "model",
+  "roof": 920.8
+ },
+ {
+  "s": "S6",
+  "name": "smallk_nn",
+  "naive": 14.3,
+  "iree": 4.2,
+  "random": 77.5,
+  "tuned": 98.6,
+  "tlo": 98.5,
+  "tmed": 98.6,
+  "tuned_from": "model",
+  "roof": 490.3
+ },
+ {
+  "s": "S7",
+  "name": "gemv_nt",
+  "naive": 3.7,
+  "iree": 4.6,
+  "random": 12.6,
+  "tuned": 15.4,
+  "tlo": 13.5,
+  "tmed": 15.1,
+  "tuned_from": "model",
+  "roof": 15.8
+ },
+ {
+  "s": "S8",
+  "name": "regular_tn",
+  "naive": 10.4,
+  "iree": 3.3,
+  "random": 97.2,
+  "tuned": 161.2,
+  "tlo": 94.3,
+  "tmed": 148.8,
+  "tuned_from": "model+f16p",
+  "roof": 920.8
+ }
+]

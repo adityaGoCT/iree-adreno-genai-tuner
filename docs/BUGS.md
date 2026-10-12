@@ -91,6 +91,54 @@ they appeared. Each entry: symptom → cause → fix → where the fix lives. Lo
 - **Fix:** pass it as `cpp_link_args`.
 - **Where:** [`scripts/build_turnip.sh`](../scripts/build_turnip.sh).
 
+## B16 fp16 accumulation drifts past tolerance on long k chains
+- **Symptom:** GEMM candidates with `ACC=f16` fail the reference check at K = 1024 (max rel. err 1.07e-2 vs tolerance 5e-3).
+- **Cause:** each lane accumulates K/KT products sequentially in fp16; measured on the GPU: chain <= 256 -> max 4.0e-3 (0/59 over), 512 -> 7.0e-3 (8/8 over), 1024 -> 1.07e-2 (12/12 over).
+- **Fix:** verifier rule `numerics-f16-accumulation` (K/KT <= 256); cross-thread reduction (KT) is what makes fp16 accumulation legal on long K.
+- **Where:** [`gemm/verifier.py`](../gemm/verifier.py) (`F16_ACC_MAX_CHAIN`).
+
+## B17 Shared-memory loader: every iteration used the last iteration's indices
+- **Symptom:** shared-memory staged GEMM candidates with more than one loader iteration per thread (or both operands staged) read garbage (NaN output).
+- **Cause:** Python late binding: the generator's per-iteration index lambdas captured loop variables by reference.
+- **Fix:** loader index expressions are built eagerly as strings (a `@KX@` placeholder for the k-tile base).
+- **Where:** `gemm_glsl` in [`gemm/schedule.py`](../gemm/schedule.py).
+
+## B18 Partial writes to vector-typed shared memory race
+- **Symptom:** shared tiles declared as `f16vec4` and filled one fp16 lane at a time (`As[i][lane] = x`) lose writes (NaN output).
+- **Cause:** a component store is a read-modify-write of the whole vector; two threads writing different lanes of one vector race.
+- **Fix:** register-transposing loader: each thread loads `sv` rows x `vw` k-values and writes whole shared vectors; verifier rule `shared-vector-partial-write` checks the loader algebra.
+- **Where:** `loader_plan` / `gemm_glsl` in [`gemm/schedule.py`](../gemm/schedule.py), `mapping_check` in [`gemm/verifier.py`](../gemm/verifier.py).
+
+## B19 Turnip exits on barrier workgroups that cannot be fully resident
+- **Symptom:** the harness exits with status 1, no Vulkan error; logcat: `Compute shader ... which has workgroup barrier cannot be used because it's impossible to have enough concurrent waves.`
+- **Cause:** ir3 calls `exit(1)` when a compute shader with a barrier needs more waves than the core holds (FD710: 16 waves, allocated in pairs), e.g. 2048 threads at wave64.
+- **Fix:** verifier rule `barrier-wave-occupancy`: `ceil(WGS / (2 * SG)) * 2 <= 16` for kernels with a barrier. run2 found a second trigger at exactly 16 waves: 2-lane subgroup clusters (5 of 5 exited; KT >= 4 passed). ir3 lowers small clusters to a per-cluster loop; its branch stack likely lowers `max_waves` below 16. Rule `barrier-wave-occupancy-kt2`.
+- **Where:** [`gemm/verifier.py`](../gemm/verifier.py); Mesa `ir3_get_reg_independent_max_waves`.
+
+## B20 Clustered subgroup adds are wrong in 2-D workgroups
+- **Symptom:** 2048-thread GEMMs with `subgroupClusteredAdd` reductions return wrong values (err ~0.92); the same kernels are correct with a shared-memory reduction or at 1024 threads.
+- **Cause:** above 1024 invocations the local size must be 2-D (1024 per dimension); waves are then not packed by linear invocation index, so a cluster no longer holds consecutive lanes.
+- **Fix:** verifier rule `subgroup-lane-order-2d` (subgroup reductions only up to 1024 threads).
+- **Where:** [`gemm/verifier.py`](../gemm/verifier.py), probe: `gemm/runs/probe2048`.
+
+## B21 adb exit 255 blamed on a kernel
+- **Symptom:** a candidate is reported as `harness exit 255` with no error from the harness.
+- **Cause:** 255 is adb's own exit status when the transport drops (the harness exits 0-3); the batch runner blamed the next candidate.
+- **Fix:** on 255, reconnect (`adb connect`, Wi-Fi only) and rerun the remaining candidates without blaming one.
+- **Where:** `run_batch` in [`gemm/device.py`](../gemm/device.py).
+
+## B22 Crossover produced empty workgroups and crashed the verifier
+- **Symptom:** the tuning run died at S4 with `ZeroDivisionError` in the verifier's register estimate.
+- **Cause:** crossover mixed knobs from two parents without the clamps mutation applies (e.g. TN > BN), giving a workgroup of 0 threads; the static checker kept evaluating after the tile-algebra rule had failed.
+- **Fix:** crossover clamps like mutation; `tile-algebra` returns immediately. The search now resumes a run (drops the interrupted shape's records, warm-starts the shared cost model from the log). S1-S3 of run2 ran before the clamp: their invalid crossovers were simply rejected by the verifier.
+- **Where:** `crossover` / `main` in [`gemm/search.py`](../gemm/search.py), `static_check` in [`gemm/verifier.py`](../gemm/verifier.py).
+
+## B23 GPU clock scaling skews whichever kernel runs first
+- **Symptom:** in a fresh harness process, the first candidate measured 1.6-1.9x slower than in tuning (compute-bound shapes; memory-bound S4/S6 unaffected), so ablations made the tuned schedule look slower than its knock-outs.
+- **Cause:** the GPU's DVFS governor drops the clock while the GPU idles between adb round trips, and moves between discrete levels during a batch (the same kernel: 13.2 ms or 15.3 ms). Clocks cannot be pinned without root.
+- **Fix:** harness warm-up (`--warmup-ms`, 3 s for final numbers; 50 ms before every candidate); comparisons use several interleaved rounds with shuffled order, the fastest repetition per round and the median over rounds. Tuning runs (run2) predate the warm-up: each batch's first, i.e. top-ranked, pick was timed cold, which biases *against* the model-guided search.
+- **Where:** [`gemm/harness/vk_gemm_bench.c`](../gemm/harness/vk_gemm_bench.c), `ablate` / `final` in [`gemm/analyze.py`](../gemm/analyze.py).
+
 ## Open
 - **O1** fp16 DistilBERT hits `VK_ERROR_DEVICE_LOST` on Turnip (all fp16 ops pass individually: [`scripts/debug/f16_test.py`](../scripts/debug/f16_test.py)).
 - **O2** IREE 3.12's new HAL costs about 2.3x more per dispatch than 3.11's on Turnip (1.23 vs 0.54 ms for a tiny kernel, 100 per submission).

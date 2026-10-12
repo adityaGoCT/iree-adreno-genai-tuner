@@ -1,0 +1,170 @@
+{
+ "S1": {
+  "us": 614272.225,
+  "gflops": 3.4959803823133955,
+  "ok": true,
+  "err": 0.0005977,
+  "error": null,
+  "grid": [
+   [
+    128,
+    1,
+    1
+   ]
+  ],
+  "configs": [
+   {
+    "dispatch": "main_dispatch_0_matmul_like_1024x1024x1024_f16xf16xf32",
+    "translation_info": "#iree_codegen.translation_info<pipeline = #iree_gpu.spirv_pipeline<BaseVectorize> workgroup_size = [32, 2, 1]>",
+    "lowering_config": "#iree_codegen.lowering_config<tile_sizes = [[32, 256], [16, 8], [0, 0, 8]]>"
+   }
+  ]
+ },
+ "S2": {
+  "us": 1405581.268,
+  "gflops": 1.7188042833251531,
+  "ok": true,
+  "err": 0.0006852,
+  "error": null,
+  "grid": [
+   [
+    48,
+    1,
+    1
+   ]
+  ],
+  "configs": [
+   {
+    "dispatch": "main_dispatch_0_matmul_like_128x3072x3072_f16xf16xf32",
+    "translation_info": "#iree_codegen.translation_info<pipeline = #iree_gpu.spirv_pipeline<BaseVectorize> workgroup_size = [32, 2, 1]>",
+    "lowering_config": "#iree_codegen.lowering_config<tile_sizes = [[32, 256], [16, 8], [0, 0, 8]]>"
+   }
+  ]
+ },
+ "S3": {
+  "us": 150764.163,
+  "gflops": 3.560998192919361,
+  "ok": true,
+  "err": 0.0006668,
+  "error": null,
+  "grid": [
+   [
+    32,
+    1,
+    1
+   ]
+  ],
+  "configs": [
+   {
+    "dispatch": "main_dispatch_0_matmul_like_4096x64x1024_f16xf16xf32",
+    "translation_info": "#iree_codegen.translation_info<pipeline = #iree_gpu.spirv_pipeline<BaseVectorize> workgroup_size = [8, 8, 1]>",
+    "lowering_config": "#iree_codegen.lowering_config<tile_sizes = [[128, 64], [16, 8], [0, 0, 8]]>"
+   }
+  ]
+ },
+ "S4": {
+  "us": 117026.143,
+  "gflops": 4.587615196375395,
+  "ok": true,
+  "err": 0.0007322,
+  "error": null,
+  "grid": [
+   [
+    16,
+    1,
+    1
+   ]
+  ],
+  "configs": [
+   {
+    "dispatch": "main_dispatch_0_matmul_like_16x4096x4096_f16xf16xf32",
+    "translation_info": "#iree_codegen.translation_info<pipeline = #iree_gpu.spirv_pipeline<BaseVectorize> workgroup_size = [32, 2, 1]>",
+    "lowering_config": "#iree_codegen.lowering_config<tile_sizes = [[16, 256], [8, 8], [0, 0, 16]]>"
+   }
+  ]
+ },
+ "S5": {
+  "us": 614353.37,
+  "gflops": 1.7477593131783422,
+  "ok": true,
+  "err": 0.0008861,
+  "error": null,
+  "grid": [
+   [
+    8,
+    1,
+    1
+   ]
+  ],
+  "configs": [
+   {
+    "dispatch": "main_dispatch_0_matmul_like_256x256x8192_f16xf16xf32",
+    "translation_info": "#iree_codegen.translation_info<pipeline = #iree_gpu.spirv_pipeline<BaseVectorize> workgroup_size = [32, 2, 1]>",
+    "lowering_config": "#iree_codegen.lowering_config<tile_sizes = [[32, 256], [16, 8], [0, 0, 8]]>"
+   }
+  ]
+ },
+ "S6": {
+  "us": 77363.54,
+  "gflops": 3.46979282488883,
+  "ok": true,
+  "err": 0.0007927,
+  "error": null,
+  "grid": [
+   [
+    512,
+    1,
+    1
+   ]
+  ],
+  "configs": [
+   {
+    "dispatch": "main_dispatch_0_matmul_like_2048x2048x32_f16xf16xf32",
+    "translation_info": "#iree_codegen.translation_info<pipeline = #iree_gpu.spirv_pipeline<BaseVectorize> workgroup_size = [32, 2, 1]>",
+    "lowering_config": "#iree_codegen.lowering_config<tile_sizes = [[32, 256], [16, 8], [0, 0, 8]]>"
+   }
+  ]
+ },
+ "S7": {
+  "us": 10640.156,
+  "gflops": 3.1535657935842294,
+  "ok": true,
+  "err": 0.0007443,
+  "error": null,
+  "grid": [
+   [
+    4096,
+    1,
+    1
+   ]
+  ],
+  "configs": [
+   {
+    "dispatch": "main_dispatch_0_matvec_like_4096x4096_f16xf16xf32",
+    "translation_info": "#iree_codegen.translation_info<pipeline = #iree_gpu.spirv_pipeline<SubgroupReduce> workgroup_size = [128, 1, 1]>",
+    "lowering_config": "#iree_codegen.lowering_config<tile_sizes = [[1], [0, 512]]>"
+   }
+  ]
+ },
+ "S8": {
+  "us": 271410.827,
+  "gflops": 3.3380011918242305,
+  "ok": true,
+  "err": 0.0006755,
+  "error": null,
+  "grid": [
+   [
+    72,
+    1,
+    1
+   ]
+  ],
+  "configs": [
+   {
+    "dispatch": "main_dispatch_0_matmul_like_768x768x768_f16xf16xf32",
+    "translation_info": "#iree_codegen.translation_info<pipeline = #iree_gpu.spirv_pipeline<BaseVectorize> workgroup_size = [32, 2, 1]>",
+    "lowering_config": "#iree_codegen.lowering_config<tile_sizes = [[32, 256], [16, 8], [0, 0, 8]]>"
+   }
+  ]
+ }
+}
