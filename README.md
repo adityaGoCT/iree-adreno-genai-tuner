@@ -19,7 +19,7 @@ Mac over adb (Wi-Fi). Everything runs without root.
 | Llama 3.2 3B int4 export (int4 K-packed int32, 5 KV buckets, in-place KV cache) | built + validated on host; on-device run is next |
 | Kernel tuner on the decode int4 GEMV (5120 x 3072) | 20.6 ms → **2.63 ms** (7.8x) |
 
-Details, every bug and its bisection: [`docs/NOTES.md`](docs/NOTES.md). Tuner design:
+Every bug and its fix: [`docs/BUGS.md`](docs/BUGS.md); bisection notes: [`docs/NOTES.md`](docs/NOTES.md). Tuner design:
 [`docs/TUNER_PLAN.md`](docs/TUNER_PLAN.md). Device facts: [`docs/DEVICE.md`](docs/DEVICE.md).
 
 ## Layout
