@@ -1,7 +1,7 @@
 # Host setup
 
 Everything below was used on macOS (Apple silicon). Nothing is installed on the phone's system
-partition; on-device files live in `/data/local/tmp/{iree,iree312,turnip}`.
+partition; on-device files live in `/data/local/tmp/{iree,iree312,turnip,mojo}`.
 
 | Tool | Version used | Install | Why |
 |---|---|---|---|
@@ -13,10 +13,12 @@ partition; on-device files live in `/data/local/tmp/{iree,iree312,turnip}`.
 | meson, bison | 1.12 / 3.8 | `brew install meson bison` | Mesa Turnip build (bison is keg-only: `BISON_DIR`) |
 | Python packages | see `scripts/setup_venvs.sh` | | torch 2.14.1, transformers 5.19.0, iree-turbine 3.9.0, IREE 3.11.0 / 3.12.0, mako |
 | GEMM tuner packages (`.venv-iree312`) | scikit-learn 1.9.1 (+ scipy 1.18.1), matplotlib 3.11.2 | `scripts/setup_venvs.sh` | learned cost model, charts |
+| Mojo pipeline (`.venv-mojo`) | Mojo 1.2.0, MAX 26.7.0 | `scripts/setup_venvs.sh` | `mojo/`: Mojo kernels to Adreno (MAX provides the `gpu` module) |
+| LLVM, spirv-tools | 22.1.2 / 1.4.341.0 (SPIRV-Tools v2026.1) | `brew install llvm spirv-tools` | `mojo/`: `llc` SPIR-V backend (`/opt/homebrew/opt/llvm/bin`), `spirv-val` |
 
 Why two IREE versions: IREE 3.12 rewrote its Vulkan HAL and requires Vulkan 1.3 +
 synchronization2. The stock Adreno 710 driver is Vulkan 1.1, so it needs 3.11; with Mesa Turnip
 (Vulkan 1.4) 3.12 works. Compiler and runtime versions must match.
 
-Undo: `rm -rf third_party build models .venv .venv-iree312`, `adb shell rm -rf /data/local/tmp/{iree,iree312,turnip}`,
+Undo: `rm -rf third_party build models .venv .venv-iree312 .venv-mojo`, `adb shell rm -rf /data/local/tmp/{iree,iree312,turnip,mojo}`,
 and `brew uninstall` what you added.

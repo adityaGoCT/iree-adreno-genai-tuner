@@ -2,8 +2,9 @@
 
 Lowering Hugging Face PyTorch models to a mid-range **Adreno 710** phone GPU through
 **MLIR / IREE → SPIR-V → Vulkan**, plus the start of a **genAI tuner** for the IREE stack.
-Companion code for the blog posts **[Bringing PyTorch LLMs to a Mid-Range Adreno GPU with IREE](BLOG.md)** and
-**[Part 2: Tuning fp16 GEMMs on a Phone GPU: Schedules, a Verifier and a Cost Model](BLOG-GEMM.md)**.
+Companion code for the blog posts **[Bringing PyTorch LLMs to a Mid-Range Adreno GPU with IREE](BLOG.md)**,
+**[Part 2: Tuning fp16 GEMMs on a Phone GPU: Schedules, a Verifier and a Cost Model](BLOG-GEMM.md)** and
+**[Part 3: Running Mojo GPU Kernels on an Adreno Phone GPU](BLOG-MOJO.md)**.
 
 Target: moto g stylus 5G (2024) · Snapdragon 7s Gen 2 · Adreno 710 · Android 14, driven from a
 Mac over adb (Wi-Fi). Everything runs without root.
@@ -20,6 +21,7 @@ Mac over adb (Wi-Fi). Everything runs without root.
 | Llama 3.2 3B int4 export (int4 K-packed int32, 5 KV buckets, in-place KV cache) | built + validated on host; on-device run is next |
 | Kernel tuner on the decode int4 GEMV (5120 x 3072) | 20.6 ms → **2.63 ms** (7.8x) |
 | fp16 GEMM schedule search ([`gemm/`](gemm/)): 8 shapes, verifier + cost model + evolutionary search | **7.0x** naive, **28x** IREE default (geomean); 1.9x random search at equal budget; GEMV at 97.5% of roofline |
+| Mojo GPU kernels on the Adreno 710 ([`mojo/`](mojo/)): Mojo's kernel LLVM IR retargeted to Vulkan SPIR-V and OpenCL C | PASS, 0 mismatches on Turnip, stock Vulkan 1.1, Qualcomm OpenCL 3.0 and the phone CPU |
 
 Every bug and its fix: [`docs/BUGS.md`](docs/BUGS.md); bisection notes: [`docs/NOTES.md`](docs/NOTES.md). Tuner design:
 [`docs/TUNER_PLAN.md`](docs/TUNER_PLAN.md). Device facts: [`docs/DEVICE.md`](docs/DEVICE.md).
@@ -29,7 +31,7 @@ Every bug and its fix: [`docs/BUGS.md`](docs/BUGS.md); bisection notes: [`docs/N
 ```
 scripts/
   fetch_deps.sh            pinned IREE v3.11.0 / v3.12.0 (+ barrier patch) and Mesa main@745709a
-  setup_venvs.sh           .venv (IREE 3.11) and .venv-iree312 (IREE 3.12)
+  setup_venvs.sh           .venv (IREE 3.11), .venv-iree312 (IREE 3.12), .venv-mojo (Mojo 1.2 + MAX)
   build_android_runtime.sh IREE runtime tools for Android arm64 (IREE_VERSION=3.11|3.12)
   build_runner.sh          runner/llm_runner.c for Android (IREE_VERSION=3.11|3.12)
   build_turnip.sh          Mesa Turnip + libvulkan.so shim + vkinfo (--push to install on phone)
@@ -45,6 +47,7 @@ runner/
   turnip/vkinfo.c          compute capability dump (stock vs Turnip)
   patches/                 IREE HAL execution-barrier fix (3.11, 3.12)
 gemm/                      fp16 GEMM tuner: schedule space -> GLSL, verifier, cost model, search, Vulkan harness
+mojo/                      Mojo -> Adreno: kernel IR -> Vulkan SPIR-V (mojo2vk) / OpenCL C (mojo2cl), phone runners
 targets/                   GPU target descriptions injected as hal.device.targets
 tests/probes/              subgroup-reduction probe, smoke matmul
 ```
@@ -57,7 +60,7 @@ Prereqs (macOS host; Linux works with path changes): Homebrew `cmake ninja meson
 
 ```bash
 scripts/fetch_deps.sh            # third_party/ (IREE 3.11, IREE 3.12, Mesa)
-scripts/setup_venvs.sh           # .venv, .venv-iree312
+scripts/setup_venvs.sh           # .venv, .venv-iree312, .venv-mojo
 IREE_VERSION=3.12 scripts/build_android_runtime.sh
 IREE_VERSION=3.12 scripts/build_runner.sh
 scripts/build_turnip.sh --push   # Turnip into /data/local/tmp/turnip
@@ -97,6 +100,13 @@ IREE_VERSION=3.12 scripts/compile.sh <model_dir> turnip710   # dumps <target>.ir
 ```
 
 fp16 GEMM tuning on the phone (Turnip; adb over Wi-Fi, `ADB_WIFI=ip:port`): see [`gemm/README.md`](gemm/README.md).
+
+A Mojo GPU kernel on the phone's GPU (Turnip, stock Vulkan, OpenCL) and CPU, checked element by element;
+see [`mojo/README.md`](mojo/README.md):
+
+```bash
+python3 mojo/mojo_adreno.py mojo/src/vecadd_gpu.mojo   # summary: turnip=PASS  stock=PASS  opencl=PASS  cpu=PASS
+```
 
 ## Status
 

@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
-# Two Python 3.12 environments (IREE's macOS wheels are cp311/cp312 only):
+# Three Python 3.12 environments (IREE's macOS wheels are cp311/cp312 only):
 #   .venv          IREE 3.11.0  - compiler matching the 3.11 runtime (stock Qualcomm driver)
 #   .venv-iree312  IREE 3.12.0  - compiler matching the 3.12 runtime (Mesa Turnip)
+#   .venv-mojo     Mojo 1.2.0 + MAX 26.7.0 (MAX provides the `gpu` module) - mojo/ pipeline
 # Requires uv (https://docs.astral.sh/uv/).
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -12,5 +13,9 @@ uv venv "$ROOT/.venv-iree312" --python 3.12
 uv pip install --python "$ROOT/.venv-iree312/bin/python" "${COMMON[@]}" iree-base-compiler==3.12.0 iree-base-runtime==3.12.0
 # GEMM tuner (gemm/): learned cost model + charts
 uv pip install --python "$ROOT/.venv-iree312/bin/python" scikit-learn==1.9.1 matplotlib==3.11.2
+# Mojo -> Adreno (mojo/)
+uv venv "$ROOT/.venv-mojo" --python 3.12
+uv pip install --python "$ROOT/.venv-mojo/bin/python" mojo==1.2.0 max==26.7.0
 "$ROOT/.venv/bin/iree-compile" --version | head -2
 "$ROOT/.venv-iree312/bin/iree-compile" --version | head -2
+"$ROOT/.venv-mojo/bin/mojo" --version
