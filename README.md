@@ -21,7 +21,7 @@ Mac over adb (Wi-Fi). Everything runs without root.
 | Llama 3.2 3B int4 export (int4 K-packed int32, 5 KV buckets, in-place KV cache) | built + validated on host; on-device run is next |
 | Kernel tuner on the decode int4 GEMV (5120 x 3072) | 20.6 ms → **2.63 ms** (7.8x) |
 | fp16 GEMM schedule search ([`gemm/`](gemm/)): 8 shapes, verifier + cost model + evolutionary search | **7.0x** naive, **28x** IREE default (geomean); 1.9x random search at equal budget; GEMV at 97.5% of roofline |
-| Mojo GPU kernels on the Adreno 710 ([`mojo/`](mojo/), standalone: [mojo-adreno](https://github.com/adityaGoCT/mojo-adreno)): Mojo's kernel LLVM IR (AMD `gfx90a` build, 64-lane warps) retargeted to Vulkan SPIR-V and OpenCL C | PASS, 0 mismatches on Turnip, stock Vulkan 1.1, Qualcomm OpenCL 3.0 and the phone CPU, warp shuffles included |
+| Mojo GPU kernels on the Adreno 710 ([`mojo/`](mojo/), standalone: [mojo-adreno](https://github.com/adityaGoCT/mojo-adreno)): Mojo's kernel LLVM IR (AMD `gfx90a` build, 64-lane warps) retargeted to Vulkan SPIR-V and OpenCL C | PASS, 0 mismatches on Turnip, stock Vulkan 1.1, Qualcomm OpenCL 3.0 and the phone CPU; warp shuffles, shared memory and barriers (tiled 1024³ SGEMM) included |
 
 Every bug and its fix: [`docs/BUGS.md`](docs/BUGS.md); bisection notes: [`docs/NOTES.md`](docs/NOTES.md). Tuner design:
 [`docs/TUNER_PLAN.md`](docs/TUNER_PLAN.md). Device facts: [`docs/DEVICE.md`](docs/DEVICE.md).
